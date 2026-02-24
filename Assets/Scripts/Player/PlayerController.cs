@@ -30,6 +30,16 @@ public class PlayerController : MonoBehaviour
     public InputActionReference moveAction;
     public InputActionReference jumpAction;
 
+    [Header("Settings for Dash")]
+    public float dashSpeed = 20f;
+    public float dashDuration = 0.2f;
+    private bool isDashOn = false;
+
+    [Header("Pickup States")]
+    private bool isShieldOn = false;
+    private Coroutine shieldCoroutine;
+    private bool isSlowMo = false;
+
     // Internal state variables
     private CharacterController controller;
     private Transform cameraTransform;
@@ -95,6 +105,12 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
+        // Check for Dash state
+        if (isDashOn)
+        {
+            return; // Skip normal movement while dashing
+        }
+
         // Read our input safely from the assigned Action Reference
         Vector2 moveInput = moveAction != null ? moveAction.action.ReadValue<Vector2>() : Vector2.zero;
         float horizontal = moveInput.x;
@@ -136,6 +152,12 @@ public class PlayerController : MonoBehaviour
 
     private void HandleJumpAndGravity()
     {
+        // Check for Dash state
+        if (isDashOn)
+        {
+            return; // Stops gravity from interfering with dash
+        }
+
         // Manage Jump Buffer Time
         if (jumpAction != null && jumpAction.action.WasPressedThisFrame())
         {
@@ -194,5 +216,108 @@ public class PlayerController : MonoBehaviour
         // Apply final vertical movement
         controller.Move(velocity * Time.deltaTime);
     }
-    
+
+    // Blue battery functionality: Slow down time for a short duration
+    public void SlowMotion(float duration)
+    {
+        if (!isSlowMo)
+        {
+            StartCoroutine(SlowMotionCoroutine(duration));
+        }
+
+    }
+
+    private System.Collections.IEnumerator SlowMotionCoroutine(float duration)
+    {
+        isSlowMo = true;
+        
+        Time.timeScale = 0.5f; //   Time slowed down to half speed
+        Time.fixedDeltaTime = 0.02f * Time.timeScale; // Adjust fixed delta time for physics
+
+        yield return new WaitForSecondsRealtime(duration); // Wait for the specified duration in real time
+
+        Time.timeScale = 1f; // Retyrn time back to normal rate
+        Time.fixedDeltaTime = 0.02f; // Reset fixed delta time
+
+        isSlowMo = false;
+    }
+
+    // Green battery functionality: Activate a temporary shield that protects player from one hit
+    public void Shield(float duration)
+    {
+        if (!isShieldOn)
+        {
+            if (shieldCoroutine != null)
+            {
+                StopCoroutine(shieldCoroutine);
+            }
+            shieldCoroutine = StartCoroutine(ShieldCoroutine(duration));
+        }
+    }
+
+    private System.Collections.IEnumerator ShieldCoroutine(float duration)
+    {
+        isShieldOn = true;
+
+        // Here you would typically enable a visual effect or change player state to indicate the shield is active
+        yield return new WaitForSeconds(duration); 
+
+        isShieldOn = false;
+        // Here you would disable the visual effect or revert player state to indicate the shield has expired
+
+        shieldCoroutine = null; 
+    }
+
+    // Red battery functionality: Perform a quick dash in the current movement direction
+    public void Dash(float dashForce)
+    {
+        if (!isDashOn)
+        {
+            StartCoroutine(DashCoroutine());
+        }
+    }
+
+    private System.Collections.IEnumerator DashCoroutine()
+    {
+        isDashOn = true;
+
+        Vector3 dashDirection = transform.forward; // Store the dash direction at the moment of activation to ensure consistent movement during the dash
+
+        velocity.y = 0f; // Cancel vertical velocity to prevent unintended vertical movement during the dash and make cleaner dash movement
+
+        float dashTime = 0f;
+        while (dashTime < dashDuration)
+        {
+            controller.Move(dashDirection * dashSpeed * Time.deltaTime);
+            dashTime += Time.deltaTime;
+            yield return null; // Wait for the next frame
+        }
+        isDashOn = false;
+    }
+
+    // When player gets hit by enemy or hazard, check if shield is active. If it is, consume the shield and prevent damage, else call handover to death-handling
+    public void playerHit()
+    {
+        if (isShieldOn)
+        {
+            isShieldOn = false; // Consume the shield
+
+            if (shieldCoroutine != null)
+            {
+                StopCoroutine(shieldCoroutine); // Stop the shield coroutine if it's still running
+                shieldCoroutine = null;
+            }
+            // Here you would also typically disable the visual effect or revert player state to indicate the shield has been consumed
+            return; 
+        }
+
+        playerDeath(); // If no shield, proceed with normal death handling
+    }
+
+    private void playerDeath()
+    {
+        // Handle player death (e.g., play animation, reset level, etc.)
+        Debug.Log("Player has died!");
+        // You would typically call your game's death handling logic here
+    }
 }
