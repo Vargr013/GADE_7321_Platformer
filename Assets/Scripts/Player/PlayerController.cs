@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -39,6 +40,10 @@ public class PlayerController : MonoBehaviour
     private bool isShieldOn = false;
     private Coroutine shieldCoroutine;
     private bool isSlowMo = false;
+    
+    [Header("Animation")]
+    private Animator animator;
+    private float inputMagnitude;
 
     // Internal state variables
     private CharacterController controller;
@@ -66,6 +71,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        //Get animator
+        animator = GetComponent<Animator>();
         
         // Find the main camera in the scene to make movement camera-relative
         if (Camera.main != null)
@@ -79,6 +86,7 @@ public class PlayerController : MonoBehaviour
         CheckGrounded();
         HandleMovement();
         HandleJumpAndGravity();
+        UpdateAnimations();
     }
 
     private void CheckGrounded()
@@ -115,6 +123,9 @@ public class PlayerController : MonoBehaviour
         Vector2 moveInput = moveAction != null ? moveAction.action.ReadValue<Vector2>() : Vector2.zero;
         float horizontal = moveInput.x;
         float vertical = moveInput.y;
+        
+        // Store this for the animator
+        inputMagnitude = moveInput.magnitude;
 
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
         Vector3 moveDir = Vector3.zero;
@@ -133,6 +144,7 @@ public class PlayerController : MonoBehaviour
                 camRight.Normalize();
 
                 moveDir = camForward * direction.z + camRight * direction.x;
+                
             }
             else
             {
@@ -148,6 +160,8 @@ public class PlayerController : MonoBehaviour
         // Apply movement (with slight penalty in the air if airControl is less than 1)
         float currentSpeed = isGrounded ? moveSpeed : moveSpeed * airControl;
         controller.Move(moveDir * currentSpeed * Time.deltaTime);
+    
+    
     }
 
     private void HandleJumpAndGravity()
@@ -173,6 +187,9 @@ public class PlayerController : MonoBehaviour
         {
             // Calculate physical jump velocity based on our variable height and gravity
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            
+            //Trigger animator 
+            animator.SetTrigger("Jump");
             
             // Reset the timers so we can't double jump immediately
             jumpBufferCounter = 0f;
@@ -318,6 +335,17 @@ public class PlayerController : MonoBehaviour
     {
         // Handle player death (e.g., play animation, reset level, etc.)
         Debug.Log("Player has died!");
-        // You would typically call your game's death handling logic here
+        
+    }
+    
+    private void UpdateAnimations()
+    {
+        // Use the magnitude of our intended movement direction
+        // 0 if not moving, and 1 if moving
+        float animationSpeed = inputMagnitude * moveSpeed;
+
+        // Send the intensity to the animator
+        animator.SetFloat("Speed", animationSpeed);
+        animator.SetBool("isGrounded", isGrounded);
     }
 }

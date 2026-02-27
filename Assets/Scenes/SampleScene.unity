@@ -899,6 +899,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8077410158310273893, guid: 2b5f7dd222bdd9141926b06a7c9b975c, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c1d8f85b0cf94c245b84351983f4179d, type: 2}
     - target: {fileID: 8728416731507023012, guid: 2b5f7dd222bdd9141926b06a7c9b975c, type: 3}
       propertyPath: m_Name
       value: Player_Hero_Nova
