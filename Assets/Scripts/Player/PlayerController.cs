@@ -333,9 +333,10 @@ public class PlayerController : MonoBehaviour
 
     private void playerDeath()
     {
-        // Handle player death (e.g., play animation, reset level, etc.)
+        //Player has died   
         Debug.Log("Player has died!");
-        
+        // Communicate with the GameManager to handle lives and respawning
+        GameManager.Instance.RespawnPlayer(this.gameObject);
     }
     
     private void UpdateAnimations()
