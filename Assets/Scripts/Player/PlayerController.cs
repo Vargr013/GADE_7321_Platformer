@@ -340,6 +340,9 @@ public class PlayerController : MonoBehaviour
     
     private void UpdateAnimations()
     {
+        //Validation
+        if (animator == null) return; // Exit if no animator is attached
+        
         // Use the magnitude of our intended movement direction
         // 0 if not moving, and 1 if moving
         float animationSpeed = inputMagnitude * moveSpeed;
