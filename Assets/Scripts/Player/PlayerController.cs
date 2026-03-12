@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -253,7 +252,7 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(duration); // Wait for the specified duration in real time
 
-        Time.timeScale = 1f; // Retyrn time back to normal rate
+        Time.timeScale = 1f; // Return time back to normal rate
         Time.fixedDeltaTime = 0.02f; // Reset fixed delta time
 
         isSlowMo = false;
