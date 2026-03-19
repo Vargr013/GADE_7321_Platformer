@@ -13,6 +13,8 @@ public class DialogueManager : MonoBehaviour
     //checks if a dialogue is already playing
     private bool currentlyPlaying = false;
 
+    public DroneController drone;
+
     private void Awake()
     {
         Instance = this;
@@ -40,6 +42,8 @@ public class DialogueManager : MonoBehaviour
     {
         isPlaying = true;
 
+        yield return StartCoroutine(drone.ShowDrone(null));
+
         //goes through the queue and displays dialogue one by one
         while (dialogueQueue.Count > 0)
         {
@@ -51,6 +55,7 @@ public class DialogueManager : MonoBehaviour
             yield return new WaitForSeconds(current.displayDuration);
         }
 
+        drone.EndDialogue();
         isPlaying = false;
     }
 

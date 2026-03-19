@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d33e057b6bf8f104fa6c4cf22df98e90, type: 3}
+  m_Name: Entry 3
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueEntry
+  speakerName: Zippy
+  icon: {fileID: 0}
+  dialogueText: 'These are power-up batteries, they''ll give you temporary unique
+    abilities.
+
+    Red: Dash
+
+    Blue: Slow Time
+
+    Green:Shield'
+  displayDuration: 3
