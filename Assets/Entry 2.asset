@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d33e057b6bf8f104fa6c4cf22df98e90, type: 3}
   m_Name: Entry 2
   m_EditorClassIdentifier: Assembly-CSharp::DialogueEntry
-  speakerName: Zippy
+  speakerName: Marvin
   icon: {fileID: 0}
   dialogueText: You'll need to traverse these platforms and reach the end to destroy
     the Mother Core. Be careful friend!

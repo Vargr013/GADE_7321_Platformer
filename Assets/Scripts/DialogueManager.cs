@@ -32,7 +32,7 @@ public class DialogueManager : MonoBehaviour
             dialogueQueue.Enqueue(entry); // FIFO
         }
 
-        if (!isPlaying)
+        if (!currentlyPlaying)
         {
             StartCoroutine(ProcessDialogue());
         }
@@ -40,7 +40,7 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator ProcessDialogue()
     {
-        isPlaying = true;
+        currentlyPlaying = true;
 
         yield return StartCoroutine(drone.ShowDrone(null));
 
@@ -52,11 +52,11 @@ public class DialogueManager : MonoBehaviour
 
             DisplayDialogue(currentDialogue);
 
-            yield return new WaitForSeconds(current.displayDuration);
+            yield return new WaitForSeconds(currentDialogue.displayDuration);
         }
 
         drone.EndDialogue();
-        isPlaying = false;
+        currentlyPlaying = false;
     }
 
     private void DisplayDialogue(DialogueEntry entry)

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d33e057b6bf8f104fa6c4cf22df98e90, type: 3}
   m_Name: Entry 3
   m_EditorClassIdentifier: Assembly-CSharp::DialogueEntry
-  speakerName: Zippy
+  speakerName: Marvin
   icon: {fileID: 0}
   dialogueText: 'These are power-up batteries, they''ll give you temporary unique
     abilities.
