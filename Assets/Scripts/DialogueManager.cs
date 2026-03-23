@@ -42,7 +42,8 @@ public class DialogueManager : MonoBehaviour
     {
         currentlyPlaying = true;
 
-        yield return StartCoroutine(drone.ShowDrone(null));
+        //StartCoroutine(drone.ShowDrone(null));
+        yield return StartCoroutine(drone.ShowDrone());
 
         //goes through the queue and displays dialogue one by one
         while (dialogueQueue.Count > 0)
@@ -50,12 +51,17 @@ public class DialogueManager : MonoBehaviour
             //removes next dialogue from queue and displays it
             DialogueEntry currentDialogue = dialogueQueue.Dequeue();
 
-            DisplayDialogue(currentDialogue);
+            drone.DisplayText(currentDialogue.dialogueText);
 
             yield return new WaitForSeconds(currentDialogue.displayDuration);
         }
 
-        drone.EndDialogue();
+        // Hide UI
+        drone.dialogueCanvas.SetActive(false);
+        // Move drone back
+        yield return StartCoroutine(drone.HideDrone());
+
+        //drone.EndDialogue();
         currentlyPlaying = false;
     }
 

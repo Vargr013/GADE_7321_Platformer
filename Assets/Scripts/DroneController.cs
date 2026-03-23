@@ -15,7 +15,7 @@ public class DroneController : MonoBehaviour
     public GameObject dialogueCanvas;
 
     private Vector3 hiddenPosition;
-    private bool isActive = false;
+    //private bool isActive = false;
 
     void Start()
     {
@@ -23,9 +23,17 @@ public class DroneController : MonoBehaviour
         dialogueCanvas.SetActive(false);
     }
 
-    public IEnumerator ShowDrone(System.Action onComplete)
+    void Update()
     {
-        isActive = true;
+        if (player != null)
+        {
+            transform.LookAt(player);
+        }
+    }
+
+    public IEnumerator ShowDrone()
+    {
+        //isActive = true;
 
         // Calculate position in front of player
         Vector3 targetPos = player.position + player.forward * offset.z + Vector3.up * offset.y;
@@ -33,17 +41,17 @@ public class DroneController : MonoBehaviour
         // Move up to player
         while (Vector3.Distance(transform.position, targetPos) > 0.1f)
         {
-            transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * moveSpeed);
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
             yield return null;
         }
 
         dialogueCanvas.SetActive(true);
 
         // Wait for dialogue system to finish
-        yield return new WaitUntil(() => !isActive);
+        //yield return new WaitUntil(() => !isActive);
 
         // Move back down
-        while (Vector3.Distance(transform.position, hiddenPosition) > 0.1f)
+        /*while (Vector3.Distance(transform.position, hiddenPosition) > 0.1f)
         {
             transform.position = Vector3.Lerp(transform.position, hiddenPosition, Time.deltaTime * moveSpeed);
             yield return null;
@@ -51,7 +59,16 @@ public class DroneController : MonoBehaviour
 
         dialogueCanvas.SetActive(false);
 
-        onComplete?.Invoke();
+        onComplete?.Invoke();*/
+    }
+
+    public IEnumerator HideDrone()
+    {
+        while (Vector3.Distance(transform.position, hiddenPosition) > 0.1f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, hiddenPosition, moveSpeed * Time.deltaTime);
+            yield return null;
+        }
     }
 
     public void DisplayText(string text)
@@ -61,7 +78,7 @@ public class DroneController : MonoBehaviour
 
     public void EndDialogue()
     {
-        isActive = false;
+        //isActive = false;
     }
 
 }
