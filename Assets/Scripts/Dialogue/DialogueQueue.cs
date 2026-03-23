@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class DialogueQueue 
 {
+    // Make empty array for fixed size queue
     private DialogueEntry[] items;
     private int front = 0;
     private int rear = 0;
+
     private int count = 0;
 
     public DialogueQueue(int capacity)
@@ -12,6 +14,7 @@ public class DialogueQueue
         items = new DialogueEntry[capacity];
     }
 
+    // Adding dialogue entry to the rear of the queue
     public void Enqueue(DialogueEntry item)
     {
         if (count == items.Length) return; // Full
@@ -20,6 +23,7 @@ public class DialogueQueue
         count++;
     }
 
+    // Removing dialogue entry from the front of the queue
     public DialogueEntry Dequeue()
     {
         if (count == 0) return null;

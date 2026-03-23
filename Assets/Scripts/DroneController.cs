@@ -49,7 +49,7 @@ public class DroneController : MonoBehaviour
         // Move up to player
         while (Vector3.Distance(transform.position, targetPos) > 0.1f)
         {
-
+            // Make sure to remain consistent position in front of player 
             targetPos = player.position + (player.forward * offset.z) + (Vector3.up * offset.y);
             transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
             yield return null;
@@ -68,7 +68,8 @@ public class DroneController : MonoBehaviour
     public IEnumerator HideDrone()
     {
         isActive = false;
-
+        
+        // Go back to original position
         while (Vector3.Distance(transform.position, hiddenPosition) > 0.1f)
         {
             transform.position = Vector3.MoveTowards(transform.position, hiddenPosition, moveSpeed * Time.deltaTime);
