@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DialogueManager : MonoBehaviour
@@ -8,7 +7,8 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager Instance;
 
     //store the dialogue in queue
-    private Queue<DialogueEntry> dialogueQueue = new Queue<DialogueEntry>();
+    //private Queue<DialogueEntry> dialogueQueue = new Queue<DialogueEntry>();
+    private DialogueQueue dialogueQueue = new DialogueQueue(20);
 
     //checks if a dialogue is already playing
     private bool currentlyPlaying = false;
@@ -58,6 +58,7 @@ public class DialogueManager : MonoBehaviour
 
         // Hide UI
         drone.dialogueCanvas.SetActive(false);
+
         // Move drone back
         yield return StartCoroutine(drone.HideDrone());
 

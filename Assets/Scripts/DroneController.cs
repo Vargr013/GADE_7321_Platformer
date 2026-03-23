@@ -15,7 +15,7 @@ public class DroneController : MonoBehaviour
     public GameObject dialogueCanvas;
 
     private Vector3 hiddenPosition;
-    //private bool isActive = false;
+    private bool isActive = false;
 
     void Start()
     {
@@ -27,13 +27,21 @@ public class DroneController : MonoBehaviour
     {
         if (player != null)
         {
-            transform.LookAt(player);
+            // Always face the player
+            transform.LookAt(player.position + Vector3.up * (hoverHeight / 2));
+
+            // If dialogue is active, maintain position relative to player
+            if (isActive)
+            {
+                Vector3 targetPos = player.position + (player.forward * offset.z) + (Vector3.up * offset.y);
+                transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+            }
         }
     }
 
     public IEnumerator ShowDrone()
     {
-        //isActive = true;
+        
 
         // Calculate position in front of player
         Vector3 targetPos = player.position + player.forward * offset.z + Vector3.up * offset.y;
@@ -41,29 +49,26 @@ public class DroneController : MonoBehaviour
         // Move up to player
         while (Vector3.Distance(transform.position, targetPos) > 0.1f)
         {
+
+            targetPos = player.position + (player.forward * offset.z) + (Vector3.up * offset.y);
             transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
             yield return null;
         }
-
+        isActive = true;
         dialogueCanvas.SetActive(true);
 
         // Wait for dialogue system to finish
         //yield return new WaitUntil(() => !isActive);
 
-        // Move back down
-        /*while (Vector3.Distance(transform.position, hiddenPosition) > 0.1f)
-        {
-            transform.position = Vector3.Lerp(transform.position, hiddenPosition, Time.deltaTime * moveSpeed);
-            yield return null;
-        }
-
-        dialogueCanvas.SetActive(false);
-
-        onComplete?.Invoke();*/
+        
+        
     }
 
+    // Move back down
     public IEnumerator HideDrone()
     {
+        isActive = false;
+
         while (Vector3.Distance(transform.position, hiddenPosition) > 0.1f)
         {
             transform.position = Vector3.MoveTowards(transform.position, hiddenPosition, moveSpeed * Time.deltaTime);
