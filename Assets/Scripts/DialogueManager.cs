@@ -6,8 +6,7 @@ public class DialogueManager : MonoBehaviour
     //make singleton for easy access
     public static DialogueManager Instance;
 
-    //store the dialogue in queue
-    //private Queue<DialogueEntry> dialogueQueue = new Queue<DialogueEntry>();
+    //store the dialogue in custom queue
     private DialogueQueue dialogueQueue = new DialogueQueue(20);
 
     //checks if a dialogue is already playing
