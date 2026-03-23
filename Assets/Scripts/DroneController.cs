@@ -68,7 +68,10 @@ public class DroneController : MonoBehaviour
     public IEnumerator HideDrone()
     {
         isActive = false;
-        
+
+        dialogueText.text = "";
+        dialogueCanvas.SetActive(false);
+
         // Go back to original position
         while (Vector3.Distance(transform.position, hiddenPosition) > 0.1f)
         {

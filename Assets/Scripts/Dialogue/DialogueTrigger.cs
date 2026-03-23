@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
 {
-    public DialogueDatabase dialogueDatabase;
+    //public DialogueDatabase dialogueDatabase;
 
     private bool hasTriggered = false;
 
@@ -11,7 +11,8 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player") && !hasTriggered)
         {
-            DialogueManager.Instance.StartDialogue(dialogueDatabase);
+            //DialogueManager.Instance.StartDialogue(dialogueDatabase);
+            DialogueManager.Instance.PlayNextSegment();
             hasTriggered = true;
         }
     }

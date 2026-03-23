@@ -14,13 +14,58 @@ public class DialogueManager : MonoBehaviour
 
     public DroneController drone;
 
+    public DialogueDatabase fullLevelDatabase;
+
     private void Awake()
     {
         Instance = this;
     }
 
+    void Start()
+    {
+        // Fill the queue once at the start of the level
+        if (fullLevelDatabase != null)
+        {
+            foreach (DialogueEntry entry in fullLevelDatabase.encounterDialogues)
+            {
+                dialogueQueue.Enqueue(entry);
+            }
+        }
+    }
+
+    // This is what the Trigger will now call
+    public void PlayNextSegment()
+    {
+        // Only play if we aren't already talking and there is something left
+        if (!currentlyPlaying && dialogueQueue.Count > 0)
+        {
+            StartCoroutine(ProcessSingleDialogue());
+        }
+    }
+
+    private IEnumerator ProcessSingleDialogue()
+    {
+        currentlyPlaying = true;
+
+        // Drone flies in
+        yield return StartCoroutine(drone.ShowDrone());
+
+        // Pull exactly ONE entry from the queue
+        DialogueEntry currentDialogue = dialogueQueue.Dequeue();
+        if (currentDialogue != null)
+        {
+            drone.DisplayText(currentDialogue.dialogueText);
+            yield return new WaitForSeconds(currentDialogue.displayDuration);
+        }
+
+        // Drone flies away immediately after that one line
+        yield return StartCoroutine(drone.HideDrone());
+
+        currentlyPlaying = false;
+    }
+
     // Start dialogue using your database
-    public void StartDialogue(DialogueDatabase database)
+    /*public void StartDialogue(DialogueDatabase database)
     {
         //clears previous dialogue
         dialogueQueue.Clear();
@@ -37,7 +82,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private IEnumerator ProcessDialogue()
+    /*private IEnumerator ProcessDialogue()
     {
         currentlyPlaying = true;
 
@@ -63,7 +108,7 @@ public class DialogueManager : MonoBehaviour
 
         //drone.EndDialogue();
         currentlyPlaying = false;
-    }
+    }*/
 
     private void DisplayDialogue(DialogueEntry entry)
     {

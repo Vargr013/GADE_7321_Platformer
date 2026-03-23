@@ -671,6 +671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
   drone: {fileID: 72684889}
+  fullLevelDatabase: {fileID: 11400000, guid: 34cd5225d12065f40918627988adb485, type: 2}
 --- !u!4 &334198350
 Transform:
   m_ObjectHideFlags: 0
@@ -1694,7 +1695,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a648776bc3fb7b54182ae25234993c95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueTrigger
-  dialogueDatabase: {fileID: 11400000, guid: 34cd5225d12065f40918627988adb485, type: 2}
 --- !u!65 &1202129006
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1845,7 +1845,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a648776bc3fb7b54182ae25234993c95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueTrigger
-  dialogueDatabase: {fileID: 11400000, guid: 34cd5225d12065f40918627988adb485, type: 2}
 --- !u!65 &1356133351
 BoxCollider:
   m_ObjectHideFlags: 0
