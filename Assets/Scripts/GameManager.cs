@@ -66,29 +66,28 @@ public class GameManager : MonoBehaviour
     // Handles player death and respawning
     public void RespawnPlayer(GameObject player)
     {
-        // Validation
-        if (checkpointStack.IsEmpty()) return;
+        if (checkpointStack.IsEmpty())
+        {
+            Debug.LogWarning("No checkpoint stored.");
+            return;
+        }
 
-        int remainingLives = playerStats.LoseLife(); // Delegate life loss to PlayerStats
-
-        // Use Peek to find where to spawn
         CheckPointData lastPoint = checkpointStack.Peek();
 
-        // Update the lives count inside the stored checkpoint data
-        lastPoint.savedLives = remainingLives;
+        CharacterController controller = player.GetComponent<CharacterController>();
 
-        // Check if player is still alive after losing a life
-        if (playerStats.IsAlive())
+        if (controller != null)
         {
-            // Reset player position to the last checkpoint
+            controller.enabled = false;
             player.transform.position = lastPoint.checkpointPosition;
-            Debug.Log($"Player Respawned. Lives remaining: {remainingLives}");
+            controller.enabled = true;
         }
         else
         {
-            // Handle the end of the game
-            Debug.Log("Game Over: Out of lives!");
+            player.transform.position = lastPoint.checkpointPosition;
         }
+
+        Debug.Log($"Respawned {player.name} to {lastPoint.checkpointPosition}");
     }
 
     // Convenience passthrough so other scripts can add score via GameManager

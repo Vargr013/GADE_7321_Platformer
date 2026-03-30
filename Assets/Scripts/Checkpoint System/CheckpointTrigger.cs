@@ -9,8 +9,8 @@ public class CheckpointTrigger : MonoBehaviour
         // Only trigger if the object hitting the checkpoint is the Player
         if (other.CompareTag("Player") && !hasBeenTriggered)
         {
-            // Tell the GameManager to save the current state at this trigger's position
-            GameManager.Instance.SaveCheckpoint(transform.position);
+            // Tell the GameManager to save the current state at the character's current position
+            GameManager.Instance.SaveCheckpoint(other.transform.position);
             hasBeenTriggered = true; 
         }
     }
