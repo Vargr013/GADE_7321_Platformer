@@ -1,3 +1,4 @@
+using UnityEngine.InputSystem;
 using System.Collections;
 using UnityEngine;
 
@@ -11,6 +12,9 @@ public class DialogueManager : MonoBehaviour
 
     //checks if a dialogue is already playing
     private bool currentlyPlaying = false;
+
+    private bool skipRequested = false;
+    private bool continueDialogue = false;
 
     public DroneController drone;
 
@@ -33,6 +37,14 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (currentlyPlaying && Keyboard.current.nKey.wasPressedThisFrame)
+        {
+            OnNextButtonPressed();
+        }
+    }
+
     // This is what the Trigger will now call
     public void PlayNextSegment()
     {
@@ -41,6 +53,12 @@ public class DialogueManager : MonoBehaviour
         {
             StartCoroutine(ProcessSingleDialogue());
         }
+    }
+
+    public void OnNextButtonPressed()
+    {
+        skipRequested = true;
+        continueDialogue = true;
     }
 
     private IEnumerator ProcessSingleDialogue()
@@ -54,67 +72,59 @@ public class DialogueManager : MonoBehaviour
         DialogueEntry currentDialogue = dialogueQueue.Dequeue();
         if (currentDialogue != null)
         {
+            skipRequested = false;
+            continueDialogue = false;
+
             drone.DisplayText(currentDialogue.dialogueText);
             drone.iconImage.sprite = currentDialogue.icon;
-            yield return new WaitForSeconds(currentDialogue.displayDuration);
+
+            float timer = 0f;
+
+            // Wait for either timeout OR next button
+            while (timer < currentDialogue.displayDuration && !skipRequested)
+            {
+                timer += Time.deltaTime;
+                yield return null;
+            }
+
+            // yield return new WaitForSeconds(currentDialogue.displayDuration);
         }
+
+        // IF player pressed next → continue showing dialogue
+        while (continueDialogue && dialogueQueue.Count > 0)
+        {
+            DialogueEntry nextDialogue = dialogueQueue.Dequeue();
+
+            skipRequested = false;
+            continueDialogue = false;
+
+            drone.DisplayText(nextDialogue.dialogueText);
+            drone.iconImage.sprite = nextDialogue.icon;
+
+            float timer = 0f;
+
+            while (timer < nextDialogue.displayDuration && !skipRequested)
+            {
+                timer += Time.deltaTime;
+                yield return null;
+            }
+        }
+
+        // If no next pressed → or finished → drone leaves
+        yield return StartCoroutine(drone.HideDrone());
+
+        currentlyPlaying = false;
 
         // Drone flies away immediately after that one line
-        yield return StartCoroutine(drone.HideDrone());
+        /*yield return StartCoroutine(drone.HideDrone());
 
-        currentlyPlaying = false;
+        currentlyPlaying = false;*/
     }
 
-    // Start dialogue using your database
-    /*public void StartDialogue(DialogueDatabase database)
-    {
-        //clears previous dialogue
-        dialogueQueue.Clear();
-
-        //adds dialogue to queue
-        foreach (DialogueEntry entry in database.encounterDialogues)
-        {
-            dialogueQueue.Enqueue(entry); // FIFO
-        }
-
-        if (!currentlyPlaying)
-        {
-            StartCoroutine(ProcessDialogue());
-        }
-    }
-
-    /*private IEnumerator ProcessDialogue()
-    {
-        currentlyPlaying = true;
-
-        //StartCoroutine(drone.ShowDrone(null));
-        yield return StartCoroutine(drone.ShowDrone());
-
-        //goes through the queue and displays dialogue one by one
-        while (dialogueQueue.Count > 0)
-        {
-            //removes next dialogue from queue and displays it
-            DialogueEntry currentDialogue = dialogueQueue.Dequeue();
-
-            drone.DisplayText(currentDialogue.dialogueText);
-
-            yield return new WaitForSeconds(currentDialogue.displayDuration);
-        }
-
-        // Hide UI
-        drone.dialogueCanvas.SetActive(false);
-
-        // Move drone back
-        yield return StartCoroutine(drone.HideDrone());
-
-        //drone.EndDialogue();
-        currentlyPlaying = false;
-    }*/
 
     private void DisplayDialogue(DialogueEntry entry)
     {
         Debug.Log($"{entry.speakerName}: {entry.dialogueText}");
 
-        // Later connect to UI here
     }
 }

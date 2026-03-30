@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d33e057b6bf8f104fa6c4cf22df98e90, type: 3}
+  m_Name: Entry 4
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueEntry
+  speakerName: Marvin
+  icon: {fileID: 21300000, guid: f108609c928d2524b82363faa546e0e2, type: 3}
+  dialogueText: 'Now that you got the basics down, things are gonna get a bit trickier.
+    Watch your back! '
+  displayDuration: 3

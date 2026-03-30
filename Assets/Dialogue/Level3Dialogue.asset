@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5deb019538cfb0c40a71442e43b56e9a, type: 3}
+  m_Name: Level3Dialogue
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueDatabase
+  encounterDialogues:
+  - {fileID: 11400000, guid: f4a944a3de3113e43bd167ebddd2f691, type: 2}
+  - {fileID: 11400000, guid: 112432276c8a5b549ae4448145772a71, type: 2}
+  - {fileID: 11400000, guid: 8912bdc421ec53740b5c12cb93ee9fb9, type: 2}
