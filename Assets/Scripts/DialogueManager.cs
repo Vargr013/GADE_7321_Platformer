@@ -55,6 +55,7 @@ public class DialogueManager : MonoBehaviour
         if (currentDialogue != null)
         {
             drone.DisplayText(currentDialogue.dialogueText);
+            drone.iconImage.sprite = currentDialogue.icon;
             yield return new WaitForSeconds(currentDialogue.displayDuration);
         }
 

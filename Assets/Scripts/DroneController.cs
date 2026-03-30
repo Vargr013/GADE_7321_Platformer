@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 
@@ -13,6 +14,9 @@ public class DroneController : MonoBehaviour
     [Header("UI")]
     public TextMeshProUGUI dialogueText;
     public GameObject dialogueCanvas;
+
+    // Variable To hold the Image component for the drone's icon (if needed for future use)
+       [SerializeField] public Image iconImage;
 
     private Vector3 hiddenPosition;
     private bool isActive = false;
