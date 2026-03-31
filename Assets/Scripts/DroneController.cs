@@ -45,8 +45,6 @@ public class DroneController : MonoBehaviour
 
     public IEnumerator ShowDrone()
     {
-        
-
         // Calculate position in front of player
         Vector3 targetPos = player.position + player.forward * offset.z + Vector3.up * offset.y;
 
@@ -60,12 +58,6 @@ public class DroneController : MonoBehaviour
         }
         isActive = true;
         dialogueCanvas.SetActive(true);
-
-        // Wait for dialogue system to finish
-        //yield return new WaitUntil(() => !isActive);
-
-        
-        
     }
 
     // Move back down
@@ -88,10 +80,4 @@ public class DroneController : MonoBehaviour
     {
         dialogueText.text = text;
     }
-
-    public void EndDialogue()
-    {
-        //isActive = false;
-    }
-
 }

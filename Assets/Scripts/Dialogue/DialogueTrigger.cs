@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
 {
-    //public DialogueDatabase dialogueDatabase;
-
     private bool hasTriggered = false;
 
     //check when to fetch dialogue from queue and display it
@@ -11,7 +9,6 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player") && !hasTriggered)
         {
-            //DialogueManager.Instance.StartDialogue(dialogueDatabase);
             DialogueManager.Instance.PlayNextSegment();
             hasTriggered = true;
         }

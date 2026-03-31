@@ -274,13 +274,10 @@ public class PlayerController : MonoBehaviour
     private System.Collections.IEnumerator ShieldCoroutine(float duration)
     {
         isShieldOn = true;
+        yield return new WaitForSeconds(duration);
 
-        // Here you would typically enable a visual effect or change player state to indicate the shield is active
-        yield return new WaitForSeconds(duration); 
-
+        // Now turn shield off after duration expires if it hasn't been consumed by a hit
         isShieldOn = false;
-        // Here you would disable the visual effect or revert player state to indicate the shield has expired
-
         shieldCoroutine = null; 
     }
 

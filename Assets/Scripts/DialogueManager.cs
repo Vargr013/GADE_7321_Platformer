@@ -39,13 +39,13 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
+        // Check for the "Next" button press to skip or continue dialogue
         if (currentlyPlaying && Keyboard.current.nKey.wasPressedThisFrame)
         {
             OnNextButtonPressed();
         }
     }
 
-    // This is what the Trigger will now call
     public void PlayNextSegment()
     {
         // Only play if we aren't already talking and there is something left
@@ -87,10 +87,9 @@ public class DialogueManager : MonoBehaviour
                 yield return null;
             }
 
-            // yield return new WaitForSeconds(currentDialogue.displayDuration);
         }
 
-        // IF player pressed next → continue showing dialogue
+        // If player pressed next or N then continue showing dialogue
         while (continueDialogue && dialogueQueue.Count > 0)
         {
             DialogueEntry nextDialogue = dialogueQueue.Dequeue();
@@ -110,15 +109,10 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        // If no next pressed → or finished → drone leaves
+        // If we exit the loop, either the player skipped or we ran out of dialogue. In either case, hide the drone and end the segment
         yield return StartCoroutine(drone.HideDrone());
 
         currentlyPlaying = false;
-
-        // Drone flies away immediately after that one line
-        /*yield return StartCoroutine(drone.HideDrone());
-
-        currentlyPlaying = false;*/
     }
 
 
