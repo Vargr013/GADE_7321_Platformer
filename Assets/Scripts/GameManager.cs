@@ -80,6 +80,15 @@ public class GameManager : MonoBehaviour
         {
             controller.enabled = false;
             player.transform.position = lastPoint.checkpointPosition;
+            //Remove life on repsawn
+            player.GetComponent<PlayerStats>().LoseLife();
+            if (!player.GetComponent<PlayerStats>().IsAlive())
+            {
+                Debug.Log("Game Over!");
+                // Will Implement game over logic here 
+                //Pause game
+                Time.timeScale = 0f;
+            }
             controller.enabled = true;
         }
         else
