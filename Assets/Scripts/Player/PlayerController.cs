@@ -6,7 +6,9 @@ public class PlayerController : MonoBehaviour
 {
     //Declarations
     [Header("Movement Settings")]
-    public float moveSpeed = 8f;
+    // Walk is the normal speed, sprint is used while sprint input is held
+    public float walkSpeed = 5f;
+    public float sprintSpeed = 8f;
     public float rotationSpeed = 15f;
     [Range(0f, 1f)]
     public float airControl = 0.8f;
@@ -29,6 +31,7 @@ public class PlayerController : MonoBehaviour
     [Header("Input References")]
     public InputActionReference moveAction;
     public InputActionReference jumpAction;
+    public InputActionReference sprintAction;
 
     [Header("Settings for Dash")]
     public float dashSpeed = 20f;
@@ -51,6 +54,10 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private float coyoteTimeCounter;
     private float jumpBufferCounter;
+    // Used when sprintAction is not manually assigned in the Inspector
+    private InputAction sprintFallbackAction;
+    // Stores the speed currently used by movement and animation
+    private float currentMoveSpeed;
 
     // Processing 
     void OnEnable()
@@ -58,6 +65,16 @@ public class PlayerController : MonoBehaviour
         // Make sire the actions are enabled so they can read input
         if (moveAction != null) moveAction.action.Enable();
         if (jumpAction != null) jumpAction.action.Enable();
+        if (sprintAction != null)
+        {
+            sprintAction.action.Enable();
+        }
+        else if (moveAction != null && moveAction.action.actionMap != null)
+        {
+            // Find the Sprint action from the same input map as Move
+            sprintFallbackAction = moveAction.action.actionMap.FindAction("Sprint", false);
+            if (sprintFallbackAction != null) sprintFallbackAction.Enable();
+        }
     }
 
     void OnDisable()
@@ -65,6 +82,8 @@ public class PlayerController : MonoBehaviour
         // Disable the actions when the script is disabled
         if (moveAction != null) moveAction.action.Disable();
         if (jumpAction != null) jumpAction.action.Disable();
+        if (sprintAction != null) sprintAction.action.Disable();
+        if (sprintFallbackAction != null) sprintFallbackAction.Disable();
     }
 
     void Start()
@@ -156,11 +175,38 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
+        // Choose walk or sprint speed before applying movement
+        currentMoveSpeed = IsSprinting(moveInput) ? sprintSpeed : walkSpeed;
+
         // Apply movement (with slight penalty in the air if airControl is less than 1)
-        float currentSpeed = isGrounded ? moveSpeed : moveSpeed * airControl;
+        float currentSpeed = isGrounded ? currentMoveSpeed : currentMoveSpeed * airControl;
         controller.Move(moveDir * currentSpeed * Time.deltaTime);
     
     
+    }
+
+    private bool IsSprinting(Vector2 moveInput)
+    {
+        // Do not sprint if the player is not trying to move
+        if (moveInput.sqrMagnitude < 0.01f)
+        {
+            return false;
+        }
+
+        // Use the assigned sprint action first
+        if (sprintAction != null)
+        {
+            return sprintAction.action.IsPressed();
+        }
+
+        // Use the found Sprint action if one was found in the input map
+        if (sprintFallbackAction != null)
+        {
+            return sprintFallbackAction.IsPressed();
+        }
+
+        // Keyboard fallback so sprint still works if the input reference is not set
+        return Keyboard.current != null && Keyboard.current.leftShiftKey.isPressed;
     }
 
     private void HandleJumpAndGravity()
@@ -340,9 +386,8 @@ public class PlayerController : MonoBehaviour
         //Validation
         if (animator == null) return; // Exit if no animator is attached
         
-        // Use the magnitude of our intended movement direction
-        // 0 if not moving, and 1 if moving
-        float animationSpeed = inputMagnitude * moveSpeed;
+        // Use the current move speed so walk and sprint can drive animation intensity
+        float animationSpeed = inputMagnitude * (currentMoveSpeed > 0f ? currentMoveSpeed : walkSpeed);
 
         // Send the intensity to the animator
         animator.SetFloat("Speed", animationSpeed);
