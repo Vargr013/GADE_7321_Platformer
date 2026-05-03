@@ -5,6 +5,7 @@ public abstract class AIEnemyBase : MonoBehaviour
     public float speed;
     public float size;
 
+    //Defines how far the enemy can detect the player, can be used for different behaviors (e.g., chasing, attacking)
     public float detectionRange = 10f;
     public Transform player;
 

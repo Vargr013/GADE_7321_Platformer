@@ -12,6 +12,7 @@ public class ProjectileEnemy : AIEnemyBase
     {
         timer += Time.deltaTime;
 
+        // Check if it's time to shoot
         if (timer >= fireRate)
         {
             Shoot();
@@ -19,6 +20,7 @@ public class ProjectileEnemy : AIEnemyBase
         }
     }
 
+    // Method to instantiate the projectile
     void Shoot()
     {
         Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);

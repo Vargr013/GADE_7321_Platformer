@@ -17,6 +17,7 @@ public class AIEnemyFactory : EnemyFactory
         return obj.GetComponent<AIEnemyBase>();
     }
 
+    // Will create a patrol enemy with the specified speed and size.
     public AIEnemyBase CreatePatrolEnemy(Vector3 position, float speed, float size)
     {
         GameObject obj = GameObject.Instantiate(PatrolEnemyPrefab, position, Quaternion.identity);
@@ -25,6 +26,7 @@ public class AIEnemyFactory : EnemyFactory
         return enemy;
     }
 
+    // Will create a projectile enemy with a default speed of 0, as it may not move but rather shoot projectiles.
     public AIEnemyBase CreateProjectileEnemy(Vector3 position, float size)
     {
         GameObject obj = GameObject.Instantiate(ProjectileEnemyPrefab, position, Quaternion.identity);

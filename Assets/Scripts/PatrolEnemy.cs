@@ -23,6 +23,7 @@ public class PatrolEnemy : AIEnemyBase
 
         currentNode = waypointList.GetHead();
 
+        // Start patrolling
         if (currentNode != null)
         {
             agent.SetDestination(currentNode.waypoint.position);
@@ -35,6 +36,7 @@ public class PatrolEnemy : AIEnemyBase
 
         bool canSeePlayer = CanSeePlayer();
 
+        // State transitions
         if (canSeePlayer)
         {
             currentState = State.Chase;
@@ -56,6 +58,7 @@ public class PatrolEnemy : AIEnemyBase
             }
         }
 
+        // State actions
         switch (currentState)
         {
             case State.Patrol:
@@ -78,12 +81,14 @@ public class PatrolEnemy : AIEnemyBase
 
         RaycastHit hit;
 
+        // Cast ray from enemy's head to player's head
         Vector3 origin = transform.position + Vector3.up * 1.5f;
         Vector3 target = player.position + Vector3.up * 1f;
         Vector3 direction = (target - origin).normalized;
 
         Debug.DrawRay(origin, direction * detectionRange, Color.red);
 
+        // Check if ray hits the player
         if (Physics.Raycast(origin, direction, out hit, detectionRange))
         {
             if (hit.transform.root == player)
@@ -104,11 +109,13 @@ public class PatrolEnemy : AIEnemyBase
 
     void Chase()
     {
+        // Continuously update destination to player's current position
         agent.SetDestination(player.position);
     }
 
     void MoveToNextWaypoint()
     {
+        // Move to the next waypoint in the linked list
         if (currentNode == null) return;
 
         currentNode = currentNode.next;

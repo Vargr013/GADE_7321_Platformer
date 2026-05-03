@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
+        // Initialize the factory with the enemy prefabs
         factory = new AIEnemyFactory(PatrolEnemyPrefab, ProjectileEnemyPrefab);
 
         // Spawn patrol enemy
