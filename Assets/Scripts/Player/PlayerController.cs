@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
     private bool isSlowMo = false;
     
     [Header("Animation")]
+    [SerializeField] private float animationSpeedDampTime = 0.12f;
     private Animator animator;
     private float inputMagnitude;
 
@@ -389,8 +390,8 @@ public class PlayerController : MonoBehaviour
         // Use the current move speed so walk and sprint can drive animation intensity
         float animationSpeed = inputMagnitude * (currentMoveSpeed > 0f ? currentMoveSpeed : walkSpeed);
 
-        // Send the intensity to the animator
-        animator.SetFloat("Speed", animationSpeed);
+        // Smooth the blend tree input so movement does not snap in and out of idle.
+        animator.SetFloat("Speed", animationSpeed, animationSpeedDampTime, Time.deltaTime);
         animator.SetBool("isGrounded", isGrounded);
     }
 }

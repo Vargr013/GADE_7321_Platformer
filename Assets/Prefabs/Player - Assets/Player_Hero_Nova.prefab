@@ -5794,6 +5794,7 @@ MonoBehaviour:
   sprintAction: {fileID: 0}
   dashSpeed: 20
   dashDuration: 0.2
+  animationSpeedDampTime: 0.12
 --- !u!1 &8846219364216677540
 GameObject:
   m_ObjectHideFlags: 0
