@@ -34,8 +34,15 @@ public class CoinPickup : MonoBehaviour
         // Only trigger when the player touches the coin
         if (other.CompareTag("Player"))
         {
-            // Add score via GameManager
-            GameManager.Instance.AddScore(scoreValue);
+            PlayerStats playerStats = other.GetComponentInParent<PlayerStats>();
+            if (playerStats == null)
+            {
+                playerStats = other.GetComponent<PlayerStats>();
+            }
+            if (playerStats != null)
+            {
+                playerStats.AddScore(scoreValue);
+            }
 
             // Destroy the coin
             Destroy(gameObject);

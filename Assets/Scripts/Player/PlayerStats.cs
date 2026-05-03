@@ -10,6 +10,13 @@ public class PlayerStats : MonoBehaviour
     // Called whenever score or lives changes
     public event Action OnStatsChanged;
 
+    public void SetStats(int lives, int score)
+    {
+        currentLives = lives;
+        currentScore = score;
+        OnStatsChanged?.Invoke();
+    }
+
     // Helper method to increase score from coins/enemies
     public void AddScore(int amount)
     {

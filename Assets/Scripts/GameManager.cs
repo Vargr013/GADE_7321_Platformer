@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,26 +26,48 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += HandleSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= HandleSceneLoaded;
+    }
+
     void Start()
     {
-        // Get Player in scene
+        RefreshPlayerContext();
+    }
+
+    private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        RefreshPlayerContext();
+    }
+
+    private void RefreshPlayerContext()
+    {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-
-        // Validation
-        if (player != null)
+        if (player == null)
         {
-            // Grab the PlayerStats component from the player object
-            playerStats = player.GetComponent<PlayerStats>();
-
-            if (playerStats == null)
-            {
-                Debug.LogError("PlayerStats component not found on Player object!");
-                return;
-            }
-
-            // Save the starting position as the first checkpoint
-            SaveCheckpoint(player.transform.position);
+            return;
         }
+
+        playerStats = player.GetComponent<PlayerStats>();
+
+        if (playerStats == null)
+        {
+            Debug.LogError("PlayerStats component not found on Player object!");
+            return;
+        }
+
+        if (PlayerProgress.Instance != null)
+        {
+            PlayerProgress.Instance.BindToScenePlayer();
+        }
+
+        SaveCheckpoint(player.transform.position);
     }
 
     // Called whenever the player hits a checkpoint trigger
@@ -54,6 +77,12 @@ public class GameManager : MonoBehaviour
         if (!checkpointStack.IsEmpty())
         {
             checkpointStack.Pop();
+        }
+
+        if (playerStats == null)
+        {
+            Debug.LogWarning("Cannot save checkpoint because no PlayerStats reference is available.");
+            return;
         }
 
         // Create a new data snapshot and push it onto our custom stack
@@ -80,9 +109,17 @@ public class GameManager : MonoBehaviour
         {
             controller.enabled = false;
             player.transform.position = lastPoint.checkpointPosition;
+            PlayerStats currentPlayerStats = player.GetComponent<PlayerStats>();
+            if (currentPlayerStats == null)
+            {
+                Debug.LogError("PlayerStats component not found on Player object!");
+                controller.enabled = true;
+                return;
+            }
+
             //Remove life on repsawn
-            player.GetComponent<PlayerStats>().LoseLife();
-            if (!player.GetComponent<PlayerStats>().IsAlive())
+            currentPlayerStats.LoseLife();
+            if (!currentPlayerStats.IsAlive())
             {
                 Debug.Log("Game Over!");
                 // Will Implement game over logic here 
@@ -98,7 +135,4 @@ public class GameManager : MonoBehaviour
 
         Debug.Log($"Respawned {player.name} to {lastPoint.checkpointPosition}");
     }
-
-    // Convenience passthrough so other scripts can add score via GameManager
-    public void AddScore(int amount) => playerStats.AddScore(amount);
 }
