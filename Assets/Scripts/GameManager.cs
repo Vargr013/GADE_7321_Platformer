@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private const string DefaultSpawnId = "Default";
+
     // Static allows easy access
     public static GameManager Instance { get; private set; }
 
@@ -62,12 +64,67 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        MovePlayerToSceneSpawn(player);
+
         if (PlayerProgress.Instance != null)
         {
             PlayerProgress.Instance.BindToScenePlayer();
         }
 
         SaveCheckpoint(player.transform.position);
+    }
+
+    public void LoadLevelFromExit(GameObject player, string targetSceneName)
+    {
+        if (string.IsNullOrWhiteSpace(targetSceneName))
+        {
+            Debug.LogWarning("Cannot load level because the target scene name is empty.");
+            return;
+        }
+
+        PlayerStats exitingStats = player != null ? player.GetComponent<PlayerStats>() : playerStats;
+        if (PlayerProgress.Instance != null)
+        {
+            PlayerProgress.Instance.CaptureStats(exitingStats);
+        }
+
+        SceneManager.LoadScene(targetSceneName);
+    }
+
+    private void MovePlayerToSceneSpawn(GameObject player)
+    {
+        LevelSpawnPoint spawnPoint = FindSceneSpawnPoint(DefaultSpawnId);
+        if (spawnPoint == null)
+        {
+            return;
+        }
+
+        CharacterController controller = player.GetComponent<CharacterController>();
+        if (controller != null)
+        {
+            controller.enabled = false;
+        }
+
+        player.transform.SetPositionAndRotation(spawnPoint.transform.position, spawnPoint.transform.rotation);
+
+        if (controller != null)
+        {
+            controller.enabled = true;
+        }
+    }
+
+    private LevelSpawnPoint FindSceneSpawnPoint(string spawnId)
+    {
+        LevelSpawnPoint[] spawnPoints = FindObjectsByType<LevelSpawnPoint>(FindObjectsSortMode.None);
+        foreach (LevelSpawnPoint spawnPoint in spawnPoints)
+        {
+            if (spawnPoint.SpawnId == spawnId)
+            {
+                return spawnPoint;
+            }
+        }
+
+        return spawnPoints.Length > 0 ? spawnPoints[0] : null;
     }
 
     // Called whenever the player hits a checkpoint trigger

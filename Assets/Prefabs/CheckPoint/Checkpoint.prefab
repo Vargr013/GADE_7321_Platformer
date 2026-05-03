@@ -93,6 +93,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8391222552659086748, guid: 36bb47aa25f9c5a4d9a75871c3a1beed, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4342810906439499809}
+    - targetCorrespondingSourceObject: {fileID: -8391222552659086748, guid: 36bb47aa25f9c5a4d9a75871c3a1beed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8554377627508032283}
   m_SourcePrefab: {fileID: 100100000, guid: 36bb47aa25f9c5a4d9a75871c3a1beed, type: 3}
 --- !u!1 &1556500907019991820 stripped
 GameObject:
@@ -120,3 +123,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.045668874, y: 0.041777864, z: 0.62570006}
   m_Center: {x: -0.012834437, y: -0.002328893, z: 0.30285004}
+--- !u!114 &8554377627508032283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1556500907019991820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfd01c1c0c384854c8ea40ab98be29fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CheckpointTrigger

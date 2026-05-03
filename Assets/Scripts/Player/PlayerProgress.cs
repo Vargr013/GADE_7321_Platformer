@@ -72,6 +72,18 @@ public class PlayerProgress : MonoBehaviour
         ActivePlayerChanged?.Invoke(ActivePlayerStats);
     }
 
+    public void CaptureStats(PlayerStats stats)
+    {
+        if (stats == null)
+        {
+            return;
+        }
+
+        CarriedLives = stats.currentLives;
+        CarriedScore = stats.currentScore;
+        hasCarriedStats = true;
+    }
+
     private PlayerStats FindScenePlayerStats()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
