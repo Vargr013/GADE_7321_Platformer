@@ -30,11 +30,11 @@ public class EnemySpawner : MonoBehaviour
         else Debug.LogError("Patrol enemy spawn point is missing.");
 
         // Charger enemy
-        if (spawnPoints[1] != null) factory.CreateChargerEnemy(spawnPoints[1].position, 4f, 1.2f);
+        if (spawnPoints[2] != null) factory.CreateChargerEnemy(spawnPoints[2].position, 4f, 1.2f);
         else Debug.LogError("Charger enemy spawn point is missing.");
 
         // Projectile enemy
-        if (spawnPoints[2] != null) factory.CreateProjectileEnemy(spawnPoints[2].position, 1f);
+        if (spawnPoints[1] != null) factory.CreateProjectileEnemy(spawnPoints[1].position, 1f);
         else Debug.LogError("Projectile enemy spawn point is missing.");
     }
 }

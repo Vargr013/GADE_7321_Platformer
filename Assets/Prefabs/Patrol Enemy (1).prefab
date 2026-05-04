@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 901ecef09988e8b40a955a21c7484f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIEnemyPatrol
-  waypointList: {fileID: 4450295896258412346, guid: 7ba5f262551bf6d4b8c371b4005feb00, type: 3}
+  waypointList: {fileID: 6905489105163804028, guid: be8f6c008264cfb4b8328bde6763707b, type: 3}
 --- !u!114 &4535743480619318063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,5 +168,5 @@ MonoBehaviour:
   size: 2
   detectionRange: 10
   player: {fileID: 306899399013166242, guid: 338fe35bf58c5e04ba38127317942cc5, type: 3}
-  waypointList: {fileID: 4450295896258412346, guid: 7ba5f262551bf6d4b8c371b4005feb00, type: 3}
+  waypointList: {fileID: 6905489105163804028, guid: be8f6c008264cfb4b8328bde6763707b, type: 3}
   loseSightTime: 3

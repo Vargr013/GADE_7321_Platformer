@@ -181,4 +181,4 @@ MonoBehaviour:
   speed: 4
   size: 1.2
   detectionRange: 12
-  player: {fileID: 0}
+  player: {fileID: 306899399013166242, guid: 338fe35bf58c5e04ba38127317942cc5, type: 3}
