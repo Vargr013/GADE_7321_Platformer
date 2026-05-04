@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    private const int PatrolSpawnIndex = 0;
+    private const int ProjectileSpawnIndex = 1;
+    private const int ChargerSpawnIndex = 2;
+
     public GameObject PatrolEnemyPrefab;
     public GameObject ProjectileEnemyPrefab;
     public GameObject ChargerEnemyPrefab;
@@ -19,22 +23,25 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemies()
     {
-        if (spawnPoints == null || spawnPoints.Length < 3)
+        if (PatrolEnemyPrefab == null || ProjectileEnemyPrefab == null || ChargerEnemyPrefab == null)
         {
-            Debug.LogError("EnemySpawner needs three spawn points: patrol, charger, and projectile.");
+            Debug.LogError("EnemySpawner needs patrol, projectile, and charger prefabs assigned.");
             return;
         }
 
-        // Patrol enemies
-        if (spawnPoints[0] != null) factory.CreatePatrolEnemy(spawnPoints[0].position, 3f, 1f);
+        if (spawnPoints == null || spawnPoints.Length < 3)
+        {
+            Debug.LogError("EnemySpawner needs three spawn points: patrol, projectile, and charger.");
+            return;
+        }
+
+        if (spawnPoints[PatrolSpawnIndex] != null) factory.CreatePatrolEnemy(spawnPoints[PatrolSpawnIndex].position, 3f, 1f);
         else Debug.LogError("Patrol enemy spawn point is missing.");
 
-        // Charger enemy
-        if (spawnPoints[2] != null) factory.CreateChargerEnemy(spawnPoints[2].position, 4f, 1.2f);
-        else Debug.LogError("Charger enemy spawn point is missing.");
-
-        // Projectile enemy
-        if (spawnPoints[1] != null) factory.CreateProjectileEnemy(spawnPoints[1].position, 1f);
+        if (spawnPoints[ProjectileSpawnIndex] != null) factory.CreateProjectileEnemy(spawnPoints[ProjectileSpawnIndex].position, 1f);
         else Debug.LogError("Projectile enemy spawn point is missing.");
+
+        if (spawnPoints[ChargerSpawnIndex] != null) factory.CreateChargerEnemy(spawnPoints[ChargerSpawnIndex].position, 4f, 1.2f);
+        else Debug.LogError("Charger enemy spawn point is missing.");
     }
 }

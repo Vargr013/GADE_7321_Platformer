@@ -22,7 +22,9 @@ public class AIEnemyFactory : EnemyFactory
         }
 
         GameObject obj = GameObject.Instantiate(PatrolEnemyPrefab, position, Quaternion.identity);
-        return obj.GetComponent<AIEnemyBase>();
+        AIEnemyBase enemy = obj.GetComponent<AIEnemyBase>();
+        if (enemy != null) AssignScenePlayer(enemy);
+        return enemy;
     }
 
     // Will create a patrol enemy with the specified speed and size.
@@ -36,7 +38,15 @@ public class AIEnemyFactory : EnemyFactory
 
         GameObject obj = GameObject.Instantiate(PatrolEnemyPrefab, position, Quaternion.identity);
         AIEnemyBase enemy = obj.GetComponent<AIEnemyBase>();
-        if (enemy != null) enemy.Initialize(speed, size);
+        if (enemy != null)
+        {
+            enemy.Initialize(speed, size);
+            AssignScenePlayer(enemy);
+
+            PatrolEnemy patrol = obj.GetComponent<PatrolEnemy>();
+            NavigationLinkedList waypoints = GameObject.FindFirstObjectByType<NavigationLinkedList>();
+            if (patrol != null && waypoints != null) patrol.waypointList = waypoints;
+        }
         else Debug.LogError("PatrolEnemyPrefab does not have an AIEnemyBase component.");
         return enemy;
     }
@@ -52,7 +62,11 @@ public class AIEnemyFactory : EnemyFactory
 
         GameObject obj = GameObject.Instantiate(ChargerEnemyPrefab, position, Quaternion.identity);
         AIEnemyBase enemy = obj.GetComponent<AIEnemyBase>();
-        if (enemy != null) enemy.Initialize(speed, size);
+        if (enemy != null)
+        {
+            enemy.Initialize(speed, size);
+            AssignScenePlayer(enemy);
+        }
         else Debug.LogError("ChargerEnemyPrefab does not have an AIEnemyBase component.");
         return enemy;
     }
@@ -68,8 +82,18 @@ public class AIEnemyFactory : EnemyFactory
 
         GameObject obj = GameObject.Instantiate(ProjectileEnemyPrefab, position, Quaternion.identity);
         AIEnemyBase enemy = obj.GetComponent<AIEnemyBase>();
-        if (enemy != null) enemy.Initialize(0f, size);
+        if (enemy != null)
+        {
+            enemy.Initialize(0f, size);
+            AssignScenePlayer(enemy);
+        }
         else Debug.LogError("ProjectileEnemyPrefab does not have an AIEnemyBase component.");
         return enemy;
+    }
+
+    private void AssignScenePlayer(AIEnemyBase enemy)
+    {
+        GameObject scenePlayer = GameObject.FindGameObjectWithTag("Player");
+        if (scenePlayer != null) enemy.player = scenePlayer.transform;
     }
 }
