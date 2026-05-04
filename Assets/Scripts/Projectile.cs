@@ -28,7 +28,11 @@ public class Projectile : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player hit!");
+            PlayerController playerController = other.GetComponentInParent<PlayerController>();
+            if (playerController != null)
+            {
+                playerController.playerHit();
+            }
         }
 
         // Prevent destroying immediately if hitting the turret itself
