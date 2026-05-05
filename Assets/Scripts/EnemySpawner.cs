@@ -4,7 +4,7 @@ public class EnemySpawner : MonoBehaviour
 {
     private const int PatrolSpawnIndex = 0;
     private const int ProjectileSpawnIndex = 1;
-    private const int ChargerSpawnIndex = 2;
+    private const int FirstChargerSpawnIndex = 2;
 
     public GameObject PatrolEnemyPrefab;
     public GameObject ProjectileEnemyPrefab;
@@ -31,7 +31,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (spawnPoints == null || spawnPoints.Length < 3)
         {
-            Debug.LogError("EnemySpawner needs three spawn points: patrol, projectile, and charger.");
+            Debug.LogError("EnemySpawner needs at least three spawn points: patrol, projectile, and charger.");
             return;
         }
 
@@ -41,7 +41,10 @@ public class EnemySpawner : MonoBehaviour
         if (spawnPoints[ProjectileSpawnIndex] != null) factory.CreateProjectileEnemy(spawnPoints[ProjectileSpawnIndex].position, 1f);
         else Debug.LogError("Projectile enemy spawn point is missing.");
 
-        if (spawnPoints[ChargerSpawnIndex] != null) factory.CreateChargerEnemy(spawnPoints[ChargerSpawnIndex].position, 4f, 1.2f);
-        else Debug.LogError("Charger enemy spawn point is missing.");
+        for (int i = FirstChargerSpawnIndex; i < spawnPoints.Length; i++)
+        {
+            if (spawnPoints[i] != null) factory.CreateChargerEnemy(spawnPoints[i].position, 4f, 1.2f);
+            else Debug.LogError($"Charger enemy spawn point {i} is missing.");
+        }
     }
 }

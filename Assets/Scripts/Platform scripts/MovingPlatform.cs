@@ -10,7 +10,7 @@ public class MovingPlatform : MonoBehaviour
     }
 
     [Header("Movement Settings")]
-    // Choose whether the platform moves side to side or up and down
+    // Choose whether the platform moves side to side or along the level depth
     public MovementDirection movementDirection = MovementDirection.Horizontal;
     // Distance controls how far the platform moves from its start point
     public float distance = 5f;
@@ -74,7 +74,7 @@ public class MovingPlatform : MonoBehaviour
     {
         if (movementDirection == MovementDirection.Vertical)
         {
-            return useLocalSpace ? transform.up : Vector3.up;
+            return useLocalSpace ? transform.forward : Vector3.forward;
         }
 
         return useLocalSpace ? transform.right : Vector3.right;
