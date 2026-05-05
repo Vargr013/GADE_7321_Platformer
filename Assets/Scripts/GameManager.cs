@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private const string DefaultSpawnId = "Default";
+    private const string GameOverSceneName = "Game_Over";
 
     // Static allows easy access
     public static GameManager Instance { get; private set; }
@@ -179,9 +180,10 @@ public class GameManager : MonoBehaviour
             if (!currentPlayerStats.IsAlive())
             {
                 Debug.Log("Game Over!");
-                // Will Implement game over logic here 
-                //Pause game
-                Time.timeScale = 0f;
+                PlayerController playerController = player.GetComponent<PlayerController>();
+                if (playerController != null) playerController.enabled = false;
+                SceneManager.LoadScene(GameOverSceneName);
+                return;
             }
             controller.enabled = true;
         }

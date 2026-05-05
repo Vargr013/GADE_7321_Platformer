@@ -84,6 +84,13 @@ public class PlayerProgress : MonoBehaviour
         hasCarriedStats = true;
     }
 
+    public void ResetProgress(int lives = 3, int score = 0)
+    {
+        CarriedLives = lives;
+        CarriedScore = score;
+        hasCarriedStats = true;
+    }
+
     private PlayerStats FindScenePlayerStats()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");

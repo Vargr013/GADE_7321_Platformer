@@ -102,10 +102,20 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (!CanMoveController())
+        {
+            return;
+        }
+
         CheckGrounded();
         HandleMovement();
         HandleJumpAndGravity();
         UpdateAnimations();
+    }
+
+    private bool CanMoveController()
+    {
+        return controller != null && controller.enabled && gameObject.activeInHierarchy;
     }
 
     private void CheckGrounded()
@@ -132,6 +142,11 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
+        if (!CanMoveController())
+        {
+            return;
+        }
+
         // Check for Dash state
         if (isDashOn)
         {
@@ -212,6 +227,11 @@ public class PlayerController : MonoBehaviour
 
     private void HandleJumpAndGravity()
     {
+        if (!CanMoveController())
+        {
+            return;
+        }
+
         // Check for Dash state
         if (isDashOn)
         {
