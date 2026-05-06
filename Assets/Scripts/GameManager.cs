@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
         RefreshPlayerContext();
     }
 
+    // Refresh the player context by finding the player in the scene, binding to their stats, moving them to the spawn point, and saving an initial checkpoint
     private void RefreshPlayerContext()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -75,6 +76,7 @@ public class GameManager : MonoBehaviour
         SaveCheckpoint(player.transform.position);
     }
 
+    // Called when the player interacts with an exit trigger to load a new level, capturing their current stats to carry over to the next scene
     public void LoadLevelFromExit(GameObject player, string targetSceneName)
     {
         if (string.IsNullOrWhiteSpace(targetSceneName))
@@ -92,6 +94,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(targetSceneName);
     }
 
+    // Move the player to the designated spawn point in the scene, disabling their CharacterController during the move to prevent physics issues
     private void MovePlayerToSceneSpawn(GameObject player)
     {
         LevelSpawnPoint spawnPoint = FindSceneSpawnPoint(DefaultSpawnId);
@@ -114,6 +117,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Helper method to find a spawn point in the scene by its SpawnId, defaulting to the first available spawn point if none match
     private LevelSpawnPoint FindSceneSpawnPoint(string spawnId)
     {
         LevelSpawnPoint[] spawnPoints = FindObjectsByType<LevelSpawnPoint>(FindObjectsSortMode.None);
