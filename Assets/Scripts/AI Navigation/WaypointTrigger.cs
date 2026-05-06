@@ -6,6 +6,7 @@ public class WaypointTrigger : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
+            // If the enemy has an AIEnemyPatrol component, call MoveToNextWaypoint
             AIEnemyPatrol patrol = other.GetComponent<AIEnemyPatrol>();
             if (patrol != null)
             {

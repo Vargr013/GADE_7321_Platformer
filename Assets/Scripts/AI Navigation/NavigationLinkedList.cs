@@ -8,6 +8,7 @@ public class NavigationLinkedList : MonoBehaviour
 
     void Awake()
     {
+        // Initialize the linked list with the waypoints provided in the inspector
         foreach (Transform wp in waypoints)
         {
             AddWaypoint(wp);
@@ -28,6 +29,7 @@ public class NavigationLinkedList : MonoBehaviour
 
         WaypointNode temp = head;
 
+        // Traverse the list to find the last node (the one that points back to the head)
         while (temp.next != head)
         {
             temp = temp.next;
@@ -39,6 +41,7 @@ public class NavigationLinkedList : MonoBehaviour
         newNode.next = head; 
     }
 
+    // This method can be used to retrieve the head of the linked list, which is the starting point for navigation
     public WaypointNode GetHead()
     {
         return head;

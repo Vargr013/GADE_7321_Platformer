@@ -11,6 +11,7 @@ public class AIEnemyPatrol : MonoBehaviour
 
     void Start()
     {
+        // Initialize the NavMeshAgent and set the first destination
         agent = GetComponent<NavMeshAgent>();
         if (waypointList == null)
         {
@@ -18,6 +19,7 @@ public class AIEnemyPatrol : MonoBehaviour
             return;
         }
 
+        // Start at the head of the linked list
         currentNode = waypointList.GetHead();
         if (currentNode == null)
         {
@@ -25,6 +27,7 @@ public class AIEnemyPatrol : MonoBehaviour
             return;
         }
 
+        // Set the initial destination to the first waypoint
         if (currentNode != null)
         {
             agent.SetDestination(currentNode.waypoint.position);
@@ -33,12 +36,14 @@ public class AIEnemyPatrol : MonoBehaviour
 
     void Update()
     {
+        // Check if the agent has reached the current waypoint
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
             MoveToNextWaypoint();
         }
     }
 
+    // Move to the next waypoint in the linked list
     void MoveToNextWaypoint()
     {
         if (currentNode == null) return;
