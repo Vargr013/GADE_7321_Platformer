@@ -1879,6 +1879,62 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c456ff80207c5d14a94750479182b689, type: 3}
+--- !u!1 &590338107
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 590338109}
+  - component: {fileID: 590338108}
+  m_Layer: 0
+  m_Name: Enemy Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &590338108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 590338107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d076c6f7b0e0dfb42963d9d39a25815d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
+  PatrolEnemyPrefab: {fileID: 3829851029670043792, guid: 06695fc20787bab468b070fdc64aca68, type: 3}
+  ProjectileEnemyPrefab: {fileID: 2287026428870498682, guid: 4dfc850f0f9d6c84693d5f5f6e4fa83d, type: 3}
+  ChargerEnemyPrefab: {fileID: 7349558501263057000, guid: 2a760b41d342413b9aa57f43324ed63b, type: 3}
+  BossEnemyPrefab: {fileID: 7349558501263057000, guid: 04b07b10f50381e4cab0f4e7f73294d1, type: 3}
+  bossWaveCount: 4
+  bossWaveInterval: 15
+  spawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 780926018}
+  - {fileID: 0}
+--- !u!4 &590338109
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 590338107}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 21.06365, y: 2.79829, z: 67.28345}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &609497684
 GameObject:
   m_ObjectHideFlags: 0
@@ -2745,6 +2801,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c456ff80207c5d14a94750479182b689, type: 3}
+--- !u!1 &780926017
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 780926018}
+  m_Layer: 0
+  m_Name: BossSpawnlocaiton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &780926018
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780926017}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 45.71051, y: 1.94, z: 56.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &842978582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6905,6 +6992,115 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c456ff80207c5d14a94750479182b689, type: 3}
+--- !u!1 &3000000001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3000000002}
+  - component: {fileID: 3000000003}
+  m_Layer: 0
+  m_Name: WaypointGraphManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3000000002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3000000001}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3000000003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3000000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb825640eeace64395251746ba8e745, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaypointGraph
+  _waypointTransforms:
+  - {fileID: 1733067032}
+  - {fileID: 388690590}
+  - {fileID: 944021424}
+  - {fileID: 534434782}
+  - {fileID: 1054330441}
+  - {fileID: 95336217}
+  - {fileID: 1725510402}
+  - {fileID: 893450666}
+  - {fileID: 1343067702}
+  - {fileID: 1417019755}
+  - {fileID: 1401594863}
+  - {fileID: 2040023903}
+  - {fileID: 609497685}
+  - {fileID: 1002585949}
+  - {fileID: 416592710}
+  - {fileID: 376113863}
+  - {fileID: 2093846760}
+  - {fileID: 103938629}
+  - {fileID: 1886551247}
+  - {fileID: 1048669411}
+  _nodeIds:
+  - 1
+  - 1A
+  - 1B
+  - 1C
+  - 1D
+  - 2
+  - 2A
+  - 2B
+  - 2C
+  - 2D
+  - 3
+  - 3A
+  - 3B
+  - 3C
+  - 4
+  - 4A
+  - 4B
+  - 4C
+  - 5
+  - 6
+  _edges:
+  - 1-1A
+  - 1A-1B
+  - 1B-1D
+  - 1D-1C
+  - 1C-1
+  - 2D-2C
+  - 2C-2
+  - 2-2A
+  - 2A-2B
+  - 4B-4
+  - 4-4A
+  - 4A-5
+  - 5-3A
+  - 3A-3
+  - 3-3B
+  - 3A-3C
+  - 3C-6
+  - 6-4C
+  - 1B-2A
+  - 1D-2C
+  - 2B-3
+  - 2D-4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -7019,3 +7215,6 @@ SceneRoots:
   - {fileID: 1343067702}
   - {fileID: 1417019755}
   - {fileID: 534434782}
+  - {fileID: 3000000002}
+  - {fileID: 590338109}
+  - {fileID: 780926018}
