@@ -139,6 +139,7 @@ public class GameManager : MonoBehaviour
         if (!checkpointStack.IsEmpty())
         {
             checkpointStack.Pop();
+            SFXManager.Instance.PlaySound("CheckpointReached");
         }
 
         if (playerStats == null)

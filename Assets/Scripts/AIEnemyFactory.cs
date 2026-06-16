@@ -40,6 +40,7 @@ public class AIEnemyFactory : EnemyFactory
         }
 
         GameObject obj = GameObject.Instantiate(PatrolEnemyPrefab, position, Quaternion.identity);
+        SFXManager.Instance.PlaySound("EnemySpawn");
         AIEnemyBase enemy = obj.GetComponent<AIEnemyBase>();
         if (enemy != null)
         {
@@ -64,6 +65,7 @@ public class AIEnemyFactory : EnemyFactory
         }
 
         GameObject obj = GameObject.Instantiate(ChargerEnemyPrefab, position, Quaternion.identity);
+        SFXManager.Instance.PlaySound("EnemySpawn");
         AIEnemyBase enemy = obj.GetComponent<AIEnemyBase>();
         if (enemy != null)
         {
@@ -84,6 +86,7 @@ public class AIEnemyFactory : EnemyFactory
         }
 
         GameObject obj = GameObject.Instantiate(ProjectileEnemyPrefab, position, Quaternion.identity);
+        SFXManager.Instance.PlaySound("EnemySpawn");
         AIEnemyBase enemy = obj.GetComponent<AIEnemyBase>();
         if (enemy != null)
         {
@@ -106,6 +109,7 @@ public class AIEnemyFactory : EnemyFactory
 
         // Instantiate the prefab and initialise base stats / scale.
         GameObject obj = GameObject.Instantiate(BossEnemyPrefab, position, Quaternion.identity);
+        SFXManager.Instance.PlaySound("EnemySpawn");
         AIEnemyBase enemy = obj.GetComponent<AIEnemyBase>();
         if (enemy == null)
         {

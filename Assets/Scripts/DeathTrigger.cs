@@ -7,6 +7,7 @@ public class DeathTrigger : MonoBehaviour
         // Only trigger if the object hitting the checkpoint is the Player
         if (other.CompareTag("Player") )
         {
+            SFXManager.Instance.PlaySound("PlayerDeath");
             // Tell the GameManager to Respawn and do the required logic to reset the player to the last checkpoint, as well as reducing lives
             GameManager.Instance.RespawnPlayer(other.gameObject);
         }

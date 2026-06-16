@@ -60,6 +60,11 @@ public class PlayerController : MonoBehaviour
     // Stores the speed currently used by movement and animation
     private float currentMoveSpeed;
 
+    [Header("Footstep SFX")]
+    public float footstepInterval = 0.5f;
+
+    private float footstepTimer;
+
     // Processing 
     void OnEnable()
     {
@@ -197,8 +202,24 @@ public class PlayerController : MonoBehaviour
         // Apply movement (with slight penalty in the air if airControl is less than 1)
         float currentSpeed = isGrounded ? currentMoveSpeed : currentMoveSpeed * airControl;
         controller.Move(moveDir * currentSpeed * Time.deltaTime);
-    
-    
+
+        // Footstep SFX
+        if (isGrounded && moveInput.magnitude > 0.1f)
+        {
+            footstepTimer += Time.deltaTime;
+
+            float currentInterval = IsSprinting(moveInput) ? 0.3f : 0.5f;
+
+            if (footstepTimer >= currentInterval)
+            {
+                SFXManager.Instance.PlaySound("Footstep");
+                footstepTimer = 0f;
+            }
+        }
+        else
+        {
+            footstepTimer = 0f;
+        }
     }
 
     private bool IsSprinting(Vector2 moveInput)

@@ -48,6 +48,8 @@ public class DroneController : MonoBehaviour
         // Calculate position in front of player
         Vector3 targetPos = player.position + player.forward * offset.z + Vector3.up * offset.y;
 
+        SFXManager.Instance.PlaySound("DroneFly");
+
         // Move up to player
         while (Vector3.Distance(transform.position, targetPos) > 0.1f)
         {
@@ -67,6 +69,8 @@ public class DroneController : MonoBehaviour
 
         dialogueText.text = "";
         dialogueCanvas.SetActive(false);
+
+        SFXManager.Instance.PlaySound("DroneFly");
 
         // Go back to original position
         while (Vector3.Distance(transform.position, hiddenPosition) > 0.1f)

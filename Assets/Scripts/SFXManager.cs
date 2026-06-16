@@ -14,6 +14,7 @@ public class SFXManager : MonoBehaviour
     public AudioClip playerDeath;
     public AudioClip platformMove;
     public AudioClip checkpointReached;
+    public AudioClip droneFly;
 
     private void Awake()
     {
@@ -36,6 +37,7 @@ public class SFXManager : MonoBehaviour
         soundMap.Add("PlayerDeath", playerDeath);
         soundMap.Add("PlatformMove", platformMove);
         soundMap.Add("CheckpointReached", checkpointReached);
+        soundMap.Add("DroneFly", droneFly);
     }
 
     public void PlaySound(string soundName)
