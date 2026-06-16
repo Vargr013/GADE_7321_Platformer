@@ -4148,6 +4148,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1090725857
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4843738866165444351, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_Name
+      value: DisableBoss_Button (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 19.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 33.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9732828
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.22960979
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -26.548
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
 --- !u!1001 &1105069854
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4842,6 +4899,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1437606725
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4843738866165444351, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_Name
+      value: DisableBoss_Button (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 43.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 131.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9542573
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.2989868
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -34.794
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
 --- !u!1001 &1450524014
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7101,6 +7215,63 @@ MonoBehaviour:
   - 1D-2C
   - 2B-3
   - 2D-4
+--- !u!1001 &765646212004155361
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4843738866165444351, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_Name
+      value: DisableBoss_Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 45.578
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.514
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 85.796
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843111650047594624, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0cb4bcc6c3d06b341be7a8eb0b57c163, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -7218,3 +7389,6 @@ SceneRoots:
   - {fileID: 3000000002}
   - {fileID: 590338109}
   - {fileID: 780926018}
+  - {fileID: 765646212004155361}
+  - {fileID: 1437606725}
+  - {fileID: 1090725857}

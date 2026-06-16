@@ -3,10 +3,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class BossEnemy : AIEnemyBase
 {
+    // Global freeze flag, set by BossFreezeButton when all 3 buttons are pressed. Future bosses check this on Start and spawn already frozen. Reset on scene load.
+    public static bool GlobalFreeze = false;
+
     [Tooltip("Scene WaypointGraph the boss will patrol. Assigned by AIEnemyFactory at spawn.")]
     [SerializeField] private WaypointGraph _waypointGraph;
     [Tooltip("Seconds the boss may spend on a single destination without making progress before it picks a different neighbour.")]
@@ -22,6 +26,14 @@ public class BossEnemy : AIEnemyBase
     private Vector3 _stuckCheckStartPos;
     private string _currentNodeId;
     private bool _hasHitPlayer;
+    private bool _isFrozen;
+
+    // Resets GlobalFreeze on every scene load so reloading the level doesn't carry over the freeze state.
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+    private static void RegisterSceneReset()
+    {
+        SceneManager.sceneLoaded += (scene, mode) => GlobalFreeze = false;
+    }
 
     private void Start()
     {
@@ -29,6 +41,7 @@ public class BossEnemy : AIEnemyBase
         _agent.speed = speed;
         _pathCheckBuffer = new NavMeshPath();
         TryStartPatrol();
+        if (GlobalFreeze) Freeze();
     }
 
     // Public seam used by AIEnemyFactory to inject the scene's WaypointGraph.
@@ -36,10 +49,23 @@ public class BossEnemy : AIEnemyBase
     {
         _waypointGraph = graph;
         if (_agent != null && string.IsNullOrEmpty(_currentNodeId)) TryStartPatrol();
+        if (GlobalFreeze) Freeze();
+    }
+
+    // Called by BossFreezeButton to stop the boss in place. Agent is stopped, current path is cleared, and subsequent Updates early-return on _isFrozen.
+    public void Freeze()
+    {
+        if (_agent != null && _agent.enabled)
+        {
+            _agent.isStopped = true;
+            _agent.ResetPath();
+        }
+        _isFrozen = true;
     }
 
     private void Update()
     {
+        if (_isFrozen) return;
         if (_waypointGraph == null || _waypointGraph.Graph == null) return;
         if (string.IsNullOrEmpty(_currentNodeId)) { TryStartPatrol(); return; }
 
@@ -57,6 +83,7 @@ public class BossEnemy : AIEnemyBase
         GoToRandomNeighbour();
     }
 
+    // Picks a random node from the WaypointGraph and starts patrolling from there.
     private void TryStartPatrol()
     {
         if (_waypointGraph == null || _waypointGraph.Graph == null) return;
@@ -125,6 +152,7 @@ public class BossEnemy : AIEnemyBase
     // Attempts to hit the player if we collide with them, respecting the hit cooldown.
     private void TryHitPlayer(Collider other)
     {
+        if (_isFrozen) return; // Frozen bosses are inert.
         if (_hasHitPlayer || other == null || !other.CompareTag("Player")) return;
         PlayerController playerController = other.GetComponentInParent<PlayerController>();
         if (playerController == null) return;
