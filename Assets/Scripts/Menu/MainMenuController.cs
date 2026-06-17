@@ -1,19 +1,34 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
-    // Scene names can be set in the inspector for flexibility
-    [Header("Scene Names")]
-    [SerializeField] private string Level1SceneName = "Level_1";
-
-
     // Methods to be called by UI buttons
     //PlayGame loads the specified play scene. 
     public void PlayGame()
     {
-        Debug.Log("Play Game fired.");
-        SceneManager.LoadScene(Level1SceneName);
+        ResetProgressAndLoad(0);
+    }
+
+    public void LoadLevel1()
+    {
+        ResetProgressAndLoad(0);
+    }
+
+    public void LoadLevel2()
+    {
+        ResetProgressAndLoad(1);
+    }
+
+    public void LoadLevel3()
+    {
+        ResetProgressAndLoad(2);
+    }
+
+    private void ResetProgressAndLoad(int levelIndex)
+    {
+        if (PlayerProgress.Instance != null)
+            PlayerProgress.Instance.ResetProgress();
+        GameManager.Instance.LoadLevel(levelIndex);
     }
 
 

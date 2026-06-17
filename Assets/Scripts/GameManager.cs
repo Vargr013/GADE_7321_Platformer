@@ -15,6 +15,10 @@ public class GameManager : MonoBehaviour
     // Instance of our custom stack, told to hold CheckPointData objects (Replacing generic)
     private CustomStack<CheckPointData> checkpointStack = new CustomStack<CheckPointData>();
 
+    [Header("Level Management")]
+    [SerializeField] private string[] levelSceneNames = { "Level_1_Beginner", "Level_2_Advanced", "Level_3_Expert" };
+    private int currentLevelIndex = 0;
+
     private void Awake()
     {
         // Singleton: If an instance already exists, destroy this one.
@@ -76,23 +80,30 @@ public class GameManager : MonoBehaviour
         SaveCheckpoint(player.transform.position);
     }
 
-    // Called when the player interacts with an exit trigger to load a new level, capturing their current stats to carry over to the next scene
-    public void LoadLevelFromExit(GameObject player, string targetSceneName)
+    public void LoadLevel(int index)
     {
-        if (string.IsNullOrWhiteSpace(targetSceneName))
+        if (index < 0 || index >= levelSceneNames.Length)
         {
-            Debug.LogWarning("Cannot load level because the target scene name is empty.");
+            Debug.LogWarning($"Invalid level index: {index}");
             return;
         }
 
-        PlayerStats exitingStats = player != null ? player.GetComponent<PlayerStats>() : playerStats;
-        if (PlayerProgress.Instance != null)
-        {
-            PlayerProgress.Instance.CaptureStats(exitingStats);
-        }
-
-        SceneManager.LoadScene(targetSceneName);
+        currentLevelIndex = index;
+        checkpointStack = new CustomStack<CheckPointData>();
+        SceneManager.LoadScene(levelSceneNames[index]);
     }
+
+    // Called by LevelExitTrigger to progress sequentially to the next level
+    public void LoadNextLevel()
+    {
+        if (PlayerProgress.Instance != null && playerStats != null)
+        {
+            PlayerProgress.Instance.CaptureStats(playerStats);
+        }
+        LoadLevel(currentLevelIndex + 1);
+    }
+
+    public int GetCurrentLevelIndex() => currentLevelIndex;
 
     // Move the player to the designated spawn point in the scene, disabling their CharacterController during the move to prevent physics issues
     private void MovePlayerToSceneSpawn(GameObject player)

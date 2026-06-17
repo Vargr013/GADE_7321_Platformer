@@ -18,6 +18,17 @@ public class GameOverController : MonoBehaviour
         SceneManager.LoadScene(level1SceneName);
     }
 
+    public void RestartCurrentLevel()
+    {
+        Time.timeScale = 1f;
+
+        if (PlayerProgress.Instance != null)
+            PlayerProgress.Instance.ResetProgress();
+
+        int levelIndex = GameManager.Instance != null ? GameManager.Instance.GetCurrentLevelIndex() : 0;
+        GameManager.Instance.LoadLevel(levelIndex);
+    }
+
     public void QuitGame()
     {
         Debug.Log("Quit Game fired.");
