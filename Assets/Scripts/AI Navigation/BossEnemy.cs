@@ -19,12 +19,17 @@ public class BossEnemy : AIEnemyBase
     [SerializeField] private float _stuckDistanceThreshold = 0.5f;
     [Tooltip("Minimum delay between successive player hits, to prevent per-frame damage.")]
     [SerializeField] private float hitCooldown = 0.5f;
+    [Tooltip("Minimum seconds a boss pauses at a node before moving on.")]
+    [SerializeField] private float _nodePauseMin = 0.3f;
+    [Tooltip("Maximum seconds a boss pauses at a node before moving on.")]
+    [SerializeField] private float _nodePauseMax = 1.5f;
 
     private NavMeshAgent _agent;
     private NavMeshPath _pathCheckBuffer;
     private float _stuckCheckStartTime;
     private Vector3 _stuckCheckStartPos;
     private string _currentNodeId;
+    private float _nextMoveTime;
     private bool _hasHitPlayer;
     private bool _isFrozen;
 
@@ -39,6 +44,7 @@ public class BossEnemy : AIEnemyBase
     {
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = speed;
+        _agent.avoidancePriority = Random.Range(0, 100);
         _pathCheckBuffer = new NavMeshPath();
         TryStartPatrol();
         if (GlobalFreeze) Freeze();
@@ -79,6 +85,7 @@ public class BossEnemy : AIEnemyBase
 
         if (_agent.pathPending) return;
         if (_agent.remainingDistance > _agent.stoppingDistance) return;
+        if (Time.time < _nextMoveTime) return;
 
         GoToRandomNeighbour();
     }
@@ -93,14 +100,23 @@ public class BossEnemy : AIEnemyBase
             Debug.LogWarning($"[{nameof(BossEnemy)}] WaypointGraph is empty - no nodes to patrol.", this);
             return;
         }
+
+        List<GraphNode> validNodes = new List<GraphNode>();
         foreach (GraphNode node in all)
+            if (node.Waypoint != null) validNodes.Add(node);
+
+        if (validNodes.Count == 0)
         {
-            _currentNodeId = node.Id;
-            if (node.Waypoint != null) _agent.SetDestination(node.Waypoint.position);
-            _stuckCheckStartTime = Time.time;
-            _stuckCheckStartPos = transform.position;
-            break;
+            Debug.LogWarning($"[{nameof(BossEnemy)}] WaypointGraph has no nodes with valid Waypoints.", this);
+            return;
         }
+
+        GraphNode startNode = validNodes[Random.Range(0, validNodes.Count)];
+        _currentNodeId = startNode.Id;
+        _agent.SetDestination(startNode.Waypoint.position);
+        _stuckCheckStartTime = Time.time;
+        _stuckCheckStartPos = transform.position;
+        _nextMoveTime = Time.time + Random.Range(_nodePauseMin, _nodePauseMax);
     }
 
     // Try neighbours in random order, skipping any without a complete NavMesh path.
@@ -121,6 +137,7 @@ public class BossEnemy : AIEnemyBase
             _agent.SetDestination(candidate.Waypoint.position);
             _stuckCheckStartTime = Time.time;
             _stuckCheckStartPos = transform.position;
+            _nextMoveTime = Time.time + Random.Range(_nodePauseMin, _nodePauseMax);
             return;
         }
         Debug.LogWarning($"[{nameof(BossEnemy)}] No reachable neighbour from {_currentNodeId} - staying put.", this);
