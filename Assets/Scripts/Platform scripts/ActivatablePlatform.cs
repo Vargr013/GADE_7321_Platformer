@@ -24,12 +24,14 @@ public class ActivatablePlatform : MonoBehaviour
     private Vector3 previousPosition;
     private Vector3 worldTarget;
     private bool isActivated;
+    private Collider[] platformColliders;
 
     private void Awake()
     {
         startPosition = transform.position;
         previousPosition = transform.position;
         worldTarget = useLocalSpace ? startPosition + targetPosition : targetPosition;
+        platformColliders = GetComponents<Collider>();
     }
 
     private void FixedUpdate()
@@ -44,12 +46,13 @@ public class ActivatablePlatform : MonoBehaviour
         Vector3 delta = nextPosition - previousPosition;
 
         transform.position = nextPosition;
-        previousPosition = nextPosition;
 
         if (carryRiders && delta.sqrMagnitude > 0f)
         {
             MoveRiders(delta);
         }
+
+        previousPosition = nextPosition;
 
         if (nextPosition == target)
         {
@@ -71,7 +74,19 @@ public class ActivatablePlatform : MonoBehaviour
             CharacterController controller = rider.GetComponent<CharacterController>();
             if (controller != null && controller.enabled)
             {
+                foreach (Collider col in platformColliders)
+                {
+                    if (!col.isTrigger)
+                        Physics.IgnoreCollision(controller, col, true);
+                }
+
                 controller.Move(delta);
+
+                foreach (Collider col in platformColliders)
+                {
+                    if (!col.isTrigger)
+                        Physics.IgnoreCollision(controller, col, false);
+                }
             }
             else
             {
