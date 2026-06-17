@@ -60,6 +60,14 @@ public class PlayerController : MonoBehaviour
     // Stores the speed currently used by movement and animation
     private float currentMoveSpeed;
 
+    [Header("Player Light")]
+    public bool enablePlayerLight = true;
+    public Color playerLightColor = new Color(1f, 0.9f, 0.65f);
+    public float playerLightIntensity = 2f;
+    public float playerLightRange = 8f;
+    public float playerLightSpotAngle = 70f;
+    public float playerLightHeight = 5f;
+
     [Header("Footstep SFX")]
     public float footstepInterval = 0.5f;
 
@@ -95,14 +103,34 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        //Get animator
         animator = GetComponent<Animator>();
         
-        // Find the main camera in the scene to make movement camera-relative
         if (Camera.main != null)
         {
             cameraTransform = Camera.main.transform;
         }
+
+        if (enablePlayerLight)
+        {
+            CreatePlayerLight();
+        }
+    }
+
+    private void CreatePlayerLight()
+    {
+        GameObject lightObj = new GameObject("PlayerSpotlight");
+        lightObj.transform.SetParent(transform, false);
+        lightObj.transform.localPosition = new Vector3(0, playerLightHeight, 0);
+        lightObj.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+
+        Light spotLight = lightObj.AddComponent<Light>();
+        spotLight.type = LightType.Spot;
+        spotLight.color = playerLightColor;
+        spotLight.intensity = playerLightIntensity;
+        spotLight.range = playerLightRange;
+        spotLight.spotAngle = playerLightSpotAngle;
+        spotLight.shadows = LightShadows.Soft;
+        spotLight.shadowStrength = 0.5f;
     }
 
     void Update()
