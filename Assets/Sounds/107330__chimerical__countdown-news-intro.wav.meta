@@ -1,12 +1,5 @@
 fileFormatVersion: 2
-guid: 274649b0e221539409070ebf6c18918b
-AssetOrigin:
-  serializedVersion: 1
-  productId: 4696
-  packageName: Robot Kyle | URP
-  packageVersion: 4.0
-  assetPath: Assets/UnityTechnologies/SpaceRobotKyle/Sfx/Player_Footstep_09.wav
-  uploadId: 847474
+guid: 8dc00922431ece54eb48d7fb7b9f9cd1
 AudioImporter:
   externalObjects: {}
   serializedVersion: 8
@@ -18,9 +11,9 @@ AudioImporter:
     compressionFormat: 1
     quality: 1
     conversionMode: 0
-    preloadAudioData: 1
+    preloadAudioData: 0
   platformSettingOverrides: {}
-  forceToMono: 1
+  forceToMono: 0
   normalize: 1
   loadInBackground: 0
   ambisonic: 0

@@ -9,7 +9,7 @@ public class SFXManager : MonoBehaviour
     private AudioSource audioSource;
 
     [Header("Sound Clips")]
-    public AudioClip footstep;
+    public AudioClip[] footstepClips;
     public AudioClip enemySpawn;
     public AudioClip playerDeath;
     public AudioClip platformMove;
@@ -32,7 +32,6 @@ public class SFXManager : MonoBehaviour
 
         soundMap = new SoundHashMap();
 
-        soundMap.Add("Footstep", footstep);
         soundMap.Add("EnemySpawn", enemySpawn);
         soundMap.Add("PlayerDeath", playerDeath);
         soundMap.Add("PlatformMove", platformMove);
@@ -42,7 +41,16 @@ public class SFXManager : MonoBehaviour
 
     public void PlaySound(string soundName)
     {
-        AudioClip clip = soundMap.Get(soundName);
+        AudioClip clip = null;
+
+        if (soundName == "Footstep" && footstepClips != null && footstepClips.Length > 0)
+        {
+            clip = footstepClips[Random.Range(0, footstepClips.Length)];
+        }
+        else
+        {
+            clip = soundMap.Get(soundName);
+        }
 
         if (clip != null)
         {
@@ -50,7 +58,7 @@ public class SFXManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Sound not found in HashMap: " + soundName);
+            Debug.LogWarning("Sound not found: " + soundName);
         }
     }
 }

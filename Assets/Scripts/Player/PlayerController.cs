@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     [Header("Assisting Features")]
     public float coyoteTime = 0.15f;
     public float jumpBufferTime = 0.15f;
+    public int maxJumps = 2; // Total jumps allowed before landing
 
     [Header("Ground Detection")]
     public Transform groundCheck;
@@ -55,6 +56,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private float coyoteTimeCounter;
     private float jumpBufferCounter;
+    private int jumpsRemaining;
     // Used when sprintAction is not manually assigned in the Inspector
     private InputAction sprintFallbackAction;
     // Stores the speed currently used by movement and animation
@@ -166,6 +168,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             coyoteTimeCounter = coyoteTime;
+            jumpsRemaining = maxJumps; // Refill air jumps on landing
         }
         else
         {
@@ -297,8 +300,8 @@ public class PlayerController : MonoBehaviour
             jumpBufferCounter -= Time.deltaTime;
         }
 
-        // Execute Jump if buffered input exists and player is within coyote time (Grace period)
-        if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
+        // Execute Jump if buffered input exists and player has jumps remaining
+        if (jumpBufferCounter > 0f && jumpsRemaining > 0)
         {
             // Calculate physical jump velocity based on our variable height and gravity
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
@@ -309,6 +312,7 @@ public class PlayerController : MonoBehaviour
             // Reset the timers so we can't double jump immediately
             jumpBufferCounter = 0f;
             coyoteTimeCounter = 0f;
+            jumpsRemaining--;
         }
 
         // Short Jump Mechanic (variable jump height)
