@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main_Menu.unity
     guid: e0e3ba6f62e574b4ea5c16f8fb9b87bd
+  - enabled: 1
+    path: Assets/Scenes/Main_Menu_Bloodlines.unity
+    guid: ba16adb5cc5a539439084b0e6944ec66
   - enabled: 1
     path: Assets/Scenes/Level_1_Beginner.unity
     guid: 99c9720ab356a0642a771bea13969a05
