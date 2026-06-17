@@ -1,2 +1,17 @@
 fileFormatVersion: 2
 guid: 80a22128745190b498d39c70bc2fbe7c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - footstep: {fileID: 8300000, guid: 72f526a6a9890f643a88e85a61c86c8a, type: 3}
+  - enemySpawn: {instanceID: 0}
+  - playerDeath: {instanceID: 0}
+  - platformMove: {instanceID: 0}
+  - checkpointReached: {fileID: 8300000, guid: e25a74df780365a4b9f55b99d83cfb5d, type: 3}
+  - droneFly: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
